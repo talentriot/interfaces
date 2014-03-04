@@ -24,35 +24,38 @@ namespace InterfacesWithUI
 
         private void InitializeListBoxes()
         {
-            
-            var fernando = new Person
+
+            var apple = new Food
             {
                 Id = 1,
-                Name = "Fernando"
+                Name = "Apple",
+                Calories = 45
             };
 
-            var russ = new Person
+            var tomato = new Food
             {
                 Id = 2,
-                Name = "Russ"
+                Name = "Tomato",
+                Calories = 30
             };
 
-            var nick = new Person
+            var kiwi = new Food
             {
                 Id = 3,
-                Name = "Nick"
+                Name = "Kiwi",
+                Calories = 1000
             };
 
-            var people = new List<Person>
+            var foods = new List<Food>
             {
-                fernando,
-                russ,
-                nick
+                apple,
+                tomato,
+                kiwi
             };
 
-            foreach (var person in people)
+            foreach (var food in foods)
             {
-                lstLeft.Items.Add(person);
+                lstLeft.Items.Add(food);
             }
         }
 
@@ -62,11 +65,11 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstLeft.SelectedItem as Person;
+            var selectedFood = lstLeft.SelectedItem as Food;
 
-            RemoveFromListBox(lstLeft, selectedPerson);
+            RemoveFromListBox(lstLeft, selectedFood);
 
-            AddToListBox(lstRight, selectedPerson);
+            AddToListBox(lstRight, selectedFood);
         }
 
         private void btnToLeft_Click(object sender, EventArgs e)
@@ -75,19 +78,19 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
+            var selectedFood = lstRight.SelectedItem as Food;
 
-            RemoveFromListBox(lstRight, selectedPerson);
+            RemoveFromListBox(lstRight, selectedFood);
 
-            AddToListBox(lstLeft, selectedPerson);
+            AddToListBox(lstLeft, selectedFood);
         }
 
-        private void RemoveFromListBox(ListBox listBox, Person selectedPerson)
+        private void RemoveFromListBox(ListBox listBox, Food selectedPerson)
         {
             listBox.Items.Remove(selectedPerson);
         }
 
-        private void AddToListBox(ListBox listBox, Person selectedPerson)
+        private void AddToListBox(ListBox listBox, Food selectedPerson)
         {
             listBox.Items.Add(selectedPerson);
         }
@@ -118,34 +121,35 @@ namespace InterfacesWithUI
         {
             lstLeft.Items.Clear();
 
-            var apple = new Food
+            var fernando = new Person
             {
                 Id = 1,
-                Name = "Apple"
+                FirstName = "Fernando",
+                LastName = "Cardenas"
             };
 
-            var tomato = new Food
+            var russ = new Person
             {
                 Id = 2,
-                Name = "Tomato"
+                FirstName = "Russ"
             };
 
-            var kiwi = new Food
+            var nick = new Person
             {
                 Id = 3,
-                Name = "Kiwi"
+                FirstName = "Nick"
             };
 
-            var foods = new List<Food>
+            var people = new List<Person>
             {
-                apple,
-                tomato,
-                kiwi
+                fernando,
+                russ,
+                nick
             };
 
-            foreach (var food in foods)
+            foreach (var person in people)
             {
-                lstLeft.Items.Add(food);
+                lstLeft.Items.Add(person);
             }
         }
 
