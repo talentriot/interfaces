@@ -52,6 +52,7 @@
             this.lstRight.Name = "lstRight";
             this.lstRight.Size = new System.Drawing.Size(242, 225);
             this.lstRight.TabIndex = 1;
+            this.lstRight.SelectedIndexChanged += new System.EventHandler(this.lstRight_SelectedIndexChanged);
             // 
             // btnToRight
             // 
@@ -75,6 +76,7 @@
             // 
             // btnUp
             // 
+            this.btnUp.Enabled = false;
             this.btnUp.Location = new System.Drawing.Point(606, 103);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(33, 28);
@@ -85,6 +87,7 @@
             // 
             // btnDown
             // 
+            this.btnDown.Enabled = false;
             this.btnDown.Location = new System.Drawing.Point(606, 137);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(33, 28);

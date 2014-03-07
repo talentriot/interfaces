@@ -2,7 +2,7 @@
 
 namespace DomainAndServices.Domain
 {
-    public class Person : IDBDisplayable
+    public class Person : IDBDisplayable, ISortable
     {
         public int Id { get; set; }
 
@@ -20,5 +20,7 @@ namespace DomainAndServices.Domain
         {
             return Name;
         }
+
+        public int SortOrder { get; set; }
     }
 }

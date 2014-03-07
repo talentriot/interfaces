@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
-using DomainAndServices.Domain;
 using DomainAndServices.Interfaces;
 using DomainAndServices.Services;
 
@@ -8,6 +8,11 @@ namespace InterfacesWithUI
 {
     public partial class Form1 : Form
     {
+        enum MoveDirection
+        {
+            Up = -1,
+            Down = 1, 
+        }
         public Form1()
         {
             InitializeComponent();
@@ -44,11 +49,14 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedFood = lstLeft.SelectedItem as IDBDisplayable;
+            var selectedItem = lstLeft.SelectedItem as IDBDisplayable; 
+            
+            RemoveFromListBox(lstLeft, selectedItem);
 
-            RemoveFromListBox(lstLeft, selectedFood);
+            AddToListBox(lstRight, selectedItem);
 
-            AddToListBox(lstRight, selectedFood);
+            var selectedItemAsSortable = selectedItem as ISortable;
+            selectedItemAsSortable.SortOrder = lstRight.Items.Count - 1;
         }
 
         private void btnToLeft_Click(object sender, EventArgs e)
@@ -69,32 +77,15 @@ namespace InterfacesWithUI
             listBox.Items.Remove(selectedPerson);
         }
 
-        private void AddToListBox(ListBox listBox, IDBDisplayable selectedPerson)
+        private void AddToListBox(ListBox listBox, IDBDisplayable selectedDisplayable)
         {
-            listBox.Items.Add(selectedPerson);
+            listBox.Items.Add(selectedDisplayable);
         }
 
         private bool NothingSelectedIn(ListBox listBoxToCheck)
         {
             return listBoxToCheck.SelectedIndex < 0;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private void InitializeListBoxesWithPeople()
         {
@@ -116,8 +107,43 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
+            MoveSelectedItem(MoveDirection.Up);
+        }
+
+        private void MoveSelectedItem(MoveDirection direction)
+        {
+            var orderModifier = (int) direction;
+
+            var selectedItem = lstRight.SelectedItem as ISortable;
+            var selectedItemIndex = lstRight.SelectedIndex;
+
+            if (!IsIndexInRightListRange(selectedItem.SortOrder + orderModifier) ||
+                !IsIndexInRightListRange(selectedItemIndex + orderModifier)) return;
+
+            var newItemIndex = selectedItemIndex + orderModifier;
+            var itemToReplace = lstRight.Items[newItemIndex] as ISortable;
+            selectedItem.SortOrder += orderModifier;
+            itemToReplace.SortOrder -= orderModifier;
+
+            RepopulateList(newItemIndex);
+        }
+
+        private void RepopulateList(int newItemIndex)
+        {
+            var newListItems = GetSortedList(lstRight);
+            lstRight.Items.Clear();
+            lstRight.Items.AddRange(newListItems);
+            lstRight.SelectedIndex = newItemIndex;
+        }
+
+        private bool IsIndexInRightListRange(int index)
+        {
+            return index >= 0 && index <= lstRight.Items.Count - 1;
+        }
+
+        private object[] GetSortedList(ListBox listBox)
+        {
+            return listBox.Items.Cast<ISortable>().OrderBy(item => item.SortOrder).Cast<object>().ToArray();
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -126,10 +152,7 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
-
-
+            MoveSelectedItem(MoveDirection.Down);
         }
 
         private void cmbTypeOfItems_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,5 +172,10 @@ namespace InterfacesWithUI
             }
         }
 
+        private void lstRight_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnUp.Enabled = lstRight.SelectedIndex > 0;
+            btnDown.Enabled = lstRight.SelectedIndex < lstRight.Items.Count - 1;
+        }
     }
 }
