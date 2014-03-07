@@ -32,6 +32,8 @@
             this.lstRight = new System.Windows.Forms.ListBox();
             this.btnToRight = new System.Windows.Forms.Button();
             this.btnToLeft = new System.Windows.Forms.Button();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.btnDown = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstLeft
@@ -52,7 +54,7 @@
             // 
             // btnToRight
             // 
-            this.btnToRight.Location = new System.Drawing.Point(288, 152);
+            this.btnToRight.Location = new System.Drawing.Point(288, 118);
             this.btnToRight.Name = "btnToRight";
             this.btnToRight.Size = new System.Drawing.Size(33, 28);
             this.btnToRight.TabIndex = 2;
@@ -62,7 +64,7 @@
             // 
             // btnToLeft
             // 
-            this.btnToLeft.Location = new System.Drawing.Point(288, 209);
+            this.btnToLeft.Location = new System.Drawing.Point(288, 164);
             this.btnToLeft.Name = "btnToLeft";
             this.btnToLeft.Size = new System.Drawing.Size(33, 28);
             this.btnToLeft.TabIndex = 3;
@@ -70,11 +72,33 @@
             this.btnToLeft.UseVisualStyleBackColor = true;
             this.btnToLeft.Click += new System.EventHandler(this.btnToLeft_Click);
             // 
+            // btnUp
+            // 
+            this.btnUp.Location = new System.Drawing.Point(606, 103);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(33, 28);
+            this.btnUp.TabIndex = 4;
+            this.btnUp.Text = "/\\";
+            this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+            // 
+            // btnDown
+            // 
+            this.btnDown.Location = new System.Drawing.Point(606, 137);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(33, 28);
+            this.btnDown.TabIndex = 5;
+            this.btnDown.Text = "\\/";
+            this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 570);
+            this.ClientSize = new System.Drawing.Size(708, 570);
+            this.Controls.Add(this.btnDown);
+            this.Controls.Add(this.btnUp);
             this.Controls.Add(this.btnToLeft);
             this.Controls.Add(this.btnToRight);
             this.Controls.Add(this.lstRight);
@@ -91,6 +115,8 @@
         private System.Windows.Forms.ListBox lstRight;
         private System.Windows.Forms.Button btnToRight;
         private System.Windows.Forms.Button btnToLeft;
+        private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.Button btnDown;
     }
 }
 

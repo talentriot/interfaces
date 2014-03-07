@@ -106,5 +106,27 @@ namespace InterfacesWithUI
             }
         }
 
+        private void btnUp_Click(object sender, EventArgs e)
+        {
+            if (NothingSelectedIn(lstRight))
+            {
+                return;
+            }
+            var selectedPerson = lstRight.SelectedItem as Person;
+            var selectedPersonIndex = lstRight.SelectedIndex;
+        }
+
+        private void btnDown_Click(object sender, EventArgs e)
+        {
+            if (NothingSelectedIn(lstRight))
+            {
+                return;
+            }
+            var selectedPerson = lstRight.SelectedItem as Person;
+            var selectedPersonIndex = lstRight.SelectedIndex;
+
+
+        }
+
     }
 }
