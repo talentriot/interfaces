@@ -12,6 +12,8 @@ namespace SortingConsoleApp
             var foodService = new FoodDataService();
             var foods = foodService.GetAllFoods();
 
+            foods.Sort();
+
             foreach (Food food in foods)
             {
                 Console.WriteLine("{0}", food.Name);

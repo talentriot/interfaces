@@ -34,6 +34,7 @@
             this.btnToLeft = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnDown = new System.Windows.Forms.Button();
+            this.cmbTypeOfItems = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lstLeft
@@ -92,11 +93,24 @@
             this.btnDown.UseVisualStyleBackColor = true;
             this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
+            // cmbTypeOfItems
+            // 
+            this.cmbTypeOfItems.FormattingEnabled = true;
+            this.cmbTypeOfItems.Items.AddRange(new object[] {
+            "Food",
+            "People"});
+            this.cmbTypeOfItems.Location = new System.Drawing.Point(24, 35);
+            this.cmbTypeOfItems.Name = "cmbTypeOfItems";
+            this.cmbTypeOfItems.Size = new System.Drawing.Size(176, 21);
+            this.cmbTypeOfItems.TabIndex = 6;
+            this.cmbTypeOfItems.SelectedIndexChanged += new System.EventHandler(this.cmbTypeOfItems_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(708, 570);
+            this.Controls.Add(this.cmbTypeOfItems);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.btnUp);
             this.Controls.Add(this.btnToLeft);
@@ -117,6 +131,7 @@
         private System.Windows.Forms.Button btnToLeft;
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.Button btnDown;
+        private System.Windows.Forms.ComboBox cmbTypeOfItems;
     }
 }
 

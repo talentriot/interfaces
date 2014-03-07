@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using DomainAndServices.Domain;
+using DomainAndServices.Interfaces;
 using DomainAndServices.Services;
 
 namespace InterfacesWithUI
@@ -43,7 +44,7 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedFood = lstLeft.SelectedItem as Food;
+            var selectedFood = lstLeft.SelectedItem as IDBDisplayable;
 
             RemoveFromListBox(lstLeft, selectedFood);
 
@@ -56,19 +57,19 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedFood = lstRight.SelectedItem as Food;
+            var selectedFood = lstRight.SelectedItem as IDBDisplayable;
 
             RemoveFromListBox(lstRight, selectedFood);
 
             AddToListBox(lstLeft, selectedFood);
         }
 
-        private void RemoveFromListBox(ListBox listBox, Food selectedPerson)
+        private void RemoveFromListBox(ListBox listBox, IDBDisplayable selectedPerson)
         {
             listBox.Items.Remove(selectedPerson);
         }
 
-        private void AddToListBox(ListBox listBox, Food selectedPerson)
+        private void AddToListBox(ListBox listBox, IDBDisplayable selectedPerson)
         {
             listBox.Items.Add(selectedPerson);
         }
@@ -129,6 +130,23 @@ namespace InterfacesWithUI
             var selectedPersonIndex = lstRight.SelectedIndex;
 
 
+        }
+
+        private void cmbTypeOfItems_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var indexSelected = cmbTypeOfItems.SelectedIndex;
+            if (indexSelected < 0)
+            {
+                return;
+            }
+            if (indexSelected == 0)//food
+            {
+                InitializeListBoxesWithFoods();
+            }
+            else
+            {
+                InitializeListBoxesWithPeople();
+            }
         }
 
     }
