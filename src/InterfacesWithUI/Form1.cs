@@ -11,7 +11,7 @@ namespace InterfacesWithUI
         {
             InitializeComponent();
             InitializeListBoxDataBindings();
-            InitializeListBoxes();
+            InitializeListBoxesWithFoods();
         }
 
         private void InitializeListBoxDataBindings()
@@ -23,8 +23,10 @@ namespace InterfacesWithUI
             lstRight.ValueMember = "Id";
         }
 
-        private void InitializeListBoxes()
+        private void InitializeListBoxesWithFoods()
         {
+            lstLeft.Items.Clear();
+            lstRight.Items.Clear();
 
             var foodService = new FoodDataService();
             var foods = foodService.GetAllFoods();
@@ -96,6 +98,7 @@ namespace InterfacesWithUI
         private void InitializeListBoxesWithPeople()
         {
             lstLeft.Items.Clear();
+            lstRight.Items.Clear();
 
             var peopleService = new PersonDataService();
             var people = peopleService.GetAllPeople();
