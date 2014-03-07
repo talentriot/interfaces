@@ -3,11 +3,12 @@ using DomainAndServices.Interfaces;
 
 namespace DomainAndServices.Domain
 {
-    public class Food : IComparable, IDBDisplayable
+    public class Food : IComparable, IDBDisplayable, ISortable
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Calories { get; set; }
+        public int SortOrder { get; set; }
 
         public int CompareTo(object obj)
         {

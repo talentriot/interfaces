@@ -11,21 +11,24 @@ namespace DomainAndServices.Services
             {
                 Id = 1,
                 Name = "Apple",
-                Calories = 45
+                Calories = 45,
+                SortOrder = 0
             };
 
             var tomato = new Food
             {
                 Id = 2,
                 Name = "Tomato",
-                Calories = 30
+                Calories = 30,
+                SortOrder = 1
             };
 
             var kiwi = new Food
             {
                 Id = 3,
                 Name = "Kiwi",
-                Calories = 1000
+                Calories = 1000,
+                SortOrder = 2
             };
 
             var foods = new ArrayList

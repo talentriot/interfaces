@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
 using System.Windows.Forms;
 using DomainAndServices.Domain;
 using DomainAndServices.Interfaces;
@@ -72,6 +75,7 @@ namespace InterfacesWithUI
         private void AddToListBox(ListBox listBox, IDBDisplayable selectedPerson)
         {
             listBox.Items.Add(selectedPerson);
+            AddToListBoxInOrder(listBox);
         }
 
         private bool NothingSelectedIn(ListBox listBoxToCheck)
@@ -79,13 +83,25 @@ namespace InterfacesWithUI
             return listBoxToCheck.SelectedIndex < 0;
         }
 
+        private void AddToListBoxInOrder(ListBox listBox)
+        {
+            // take each item which is in the list, put it into an arraylist
+            // call sort on the array list
+            // clear the listbox
+            // add each item form the array list to the listbox
+            var itemArray = new List<ISortable>();
+            foreach (var item in listBox.Items.Cast<ISortable>())
+            {
+                itemArray.Add((ISortable)item);
+            }
+            itemArray = itemArray.OrderBy(item => item.SortOrder).ToList();
 
-
-
-
-
-
-
+            listBox.Items.Clear();
+            foreach (var item in itemArray)
+            {
+                listBox.Items.Add(item); 
+            }
+        }
 
 
 
@@ -116,8 +132,17 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
+            var selectedPerson = lstRight.SelectedItem as ISortable;
             var selectedPersonIndex = lstRight.SelectedIndex;
+
+            if (selectedPersonIndex > 0)
+            {
+                selectedPerson.SortOrder--;
+                var personAbove = lstRight.Items[selectedPersonIndex - 1] as ISortable;
+                personAbove.SortOrder++;
+            }
+
+            AddToListBoxInOrder(lstRight);
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -126,10 +151,17 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
+            var selectedPerson = lstRight.SelectedItem as ISortable;
             var selectedPersonIndex = lstRight.SelectedIndex;
 
+            if (lstRight.Items.Count - 1 > selectedPersonIndex)
+            {
+                selectedPerson.SortOrder++;
+                var personBelow = lstRight.Items[selectedPersonIndex + 1] as ISortable;
+                personBelow.SortOrder--;
+            }
 
+            AddToListBoxInOrder(lstRight);
         }
 
         private void cmbTypeOfItems_SelectedIndexChanged(object sender, EventArgs e)
