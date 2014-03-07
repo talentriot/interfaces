@@ -10,6 +10,7 @@ namespace DomainAndServices.Services
             var apple = new Food
             {
                 Id = 1,
+                SortNum = 9,
                 Name = "Apple",
                 Calories = 45
             };
@@ -17,6 +18,7 @@ namespace DomainAndServices.Services
             var tomato = new Food
             {
                 Id = 2,
+                SortNum = 7,
                 Name = "Tomato",
                 Calories = 30
             };
@@ -24,6 +26,7 @@ namespace DomainAndServices.Services
             var kiwi = new Food
             {
                 Id = 3,
+                SortNum = 3,
                 Name = "Kiwi",
                 Calories = 1000
             };

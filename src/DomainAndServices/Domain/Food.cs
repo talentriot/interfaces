@@ -3,9 +3,10 @@ using DomainAndServices.Interfaces;
 
 namespace DomainAndServices.Domain
 {
-    public class Food : IComparable, IDBDisplayable
+    public class Food : IComparable, IDBDisplayable, ISortable
     {
         public int Id { get; set; }
+        public int SortNum { get; set; }
         public string Name { get; set; }
         public int Calories { get; set; }
 
@@ -20,7 +21,7 @@ namespace DomainAndServices.Domain
             {
                 return -1;
             }
-            return this.Calories.CompareTo(objAsFood.Calories);
+            return this.SortNum.CompareTo(objAsFood.SortNum);
         }
     }
 }

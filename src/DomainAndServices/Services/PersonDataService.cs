@@ -10,6 +10,7 @@ namespace DomainAndServices.Services
             var fernando = new Person
             {
                 Id = 1,
+                SortNum = 1,
                 FirstName = "Fernando",
                 LastName = "Cardenas"
             };
@@ -17,6 +18,7 @@ namespace DomainAndServices.Services
             var russ = new Person
             {
                 Id = 2,
+                SortNum = 2,
                 FirstName = "Russ",
                 LastName = "Harris"
             };
@@ -24,6 +26,7 @@ namespace DomainAndServices.Services
             var nick = new Person
             {
                 Id = 3,
+                SortNum = 3,
                 FirstName = "Nick",
                 LastName = "Turner"
             };

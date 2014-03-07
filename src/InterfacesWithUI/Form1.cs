@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Windows.Forms;
 using DomainAndServices.Domain;
 using DomainAndServices.Interfaces;
@@ -31,6 +33,7 @@ namespace InterfacesWithUI
 
             var foodService = new FoodDataService();
             var foods = foodService.GetAllFoods();
+            foods.Sort();
 
             foreach (var food in foods)
             {
@@ -49,6 +52,7 @@ namespace InterfacesWithUI
             RemoveFromListBox(lstLeft, selectedFood);
 
             AddToListBox(lstRight, selectedFood);
+
         }
 
         private void btnToLeft_Click(object sender, EventArgs e)
@@ -81,6 +85,24 @@ namespace InterfacesWithUI
 
 
 
+        private ArrayList GetItemsFrom(ListBox listBox)
+        {
+            var items = new ArrayList();
+            foreach (var item in listBox.Items.Cast<ISortable>())
+            {
+                items.Add(item);
+            }
+            return items;
+        }
+
+        private void PutItemsBackIn (ListBox listBox, ArrayList arrayList)
+        {
+            listBox.Items.Clear();
+            foreach (var item in arrayList)
+            {
+                listBox.Items.Add(item);
+            }
+        }
 
 
 
@@ -95,14 +117,14 @@ namespace InterfacesWithUI
 
 
 
-
-        private void InitializeListBoxesWithPeople()
+    private void InitializeListBoxesWithPeople()
         {
             lstLeft.Items.Clear();
             lstRight.Items.Clear();
 
             var peopleService = new PersonDataService();
             var people = peopleService.GetAllPeople();
+            people.Sort();
 
             foreach (var person in people)
             {
@@ -116,8 +138,17 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
+            var selectedItem = lstRight.SelectedItem as ISortable;
+            var selectedIndex = lstRight.SelectedIndex;
+
+            // Check if the selected item is already at the top
+            if (selectedIndex == 0) return;
+
+            var allItems = GetItemsFrom(lstRight);
+            var itemToSwitch = allItems[selectedIndex - 1];
+            allItems[selectedIndex] = itemToSwitch;
+            allItems[selectedIndex - 1] = selectedItem;
+            PutItemsBackIn(lstRight, allItems);
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -126,10 +157,16 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
+            var selectedItem = lstRight.SelectedItem as ISortable;
+            var selectedIndex = lstRight.SelectedIndex;
+            var allItems = GetItemsFrom(lstRight);
 
+            if (selectedIndex == allItems.Count - 1) return;
 
+            var itemToSwitch = allItems[selectedIndex + 1];
+            allItems[selectedIndex] = itemToSwitch;
+            allItems[selectedIndex + 1] = selectedItem;
+            PutItemsBackIn(lstRight, allItems);
         }
 
         private void cmbTypeOfItems_SelectedIndexChanged(object sender, EventArgs e)
