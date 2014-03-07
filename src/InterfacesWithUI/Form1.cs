@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using DomainAndServices.Domain;
+using DomainAndServices.Services;
 
 namespace InterfacesWithUI
 {
@@ -25,33 +26,8 @@ namespace InterfacesWithUI
         private void InitializeListBoxes()
         {
 
-            var apple = new Food
-            {
-                Id = 1,
-                Name = "Apple",
-                Calories = 45
-            };
-
-            var tomato = new Food
-            {
-                Id = 2,
-                Name = "Tomato",
-                Calories = 30
-            };
-
-            var kiwi = new Food
-            {
-                Id = 3,
-                Name = "Kiwi",
-                Calories = 1000
-            };
-
-            var foods = new List<Food>
-            {
-                apple,
-                tomato,
-                kiwi
-            };
+            var foodService = new FoodDataService();
+            var foods = foodService.GetAllFoods();
 
             foreach (var food in foods)
             {
@@ -117,35 +93,12 @@ namespace InterfacesWithUI
 
 
 
-        private void InitializeListBoxesWithFoods()
+        private void InitializeListBoxesWithPeople()
         {
             lstLeft.Items.Clear();
 
-            var fernando = new Person
-            {
-                Id = 1,
-                FirstName = "Fernando",
-                LastName = "Cardenas"
-            };
-
-            var russ = new Person
-            {
-                Id = 2,
-                FirstName = "Russ"
-            };
-
-            var nick = new Person
-            {
-                Id = 3,
-                FirstName = "Nick"
-            };
-
-            var people = new List<Person>
-            {
-                fernando,
-                russ,
-                nick
-            };
+            var peopleService = new PersonDataService();
+            var people = peopleService.GetAllPeople();
 
             foreach (var person in people)
             {

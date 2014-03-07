@@ -1,4 +1,4 @@
-﻿namespace InterfacesWithUI
+﻿namespace DomainAndServices.Domain
 {
     public class Person
     {
