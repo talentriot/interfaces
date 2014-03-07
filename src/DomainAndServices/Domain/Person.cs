@@ -13,6 +13,8 @@ namespace DomainAndServices.Domain
                 return FirstName + " " + LastName;
             }
         }
+
+        public int Index { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
