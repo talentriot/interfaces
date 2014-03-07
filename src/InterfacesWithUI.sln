@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfacesWithUI", "Interfa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainAndServices", "DomainAndServices\DomainAndServices.csproj", "{7815A1D6-A124-4D0A-81E3-47F609EF37CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingConsoleApp", "SortingConsoleApp\SortingConsoleApp.csproj", "{3BA1DEA5-7682-474A-898B-C847D1DD2FDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7815A1D6-A124-4D0A-81E3-47F609EF37CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7815A1D6-A124-4D0A-81E3-47F609EF37CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7815A1D6-A124-4D0A-81E3-47F609EF37CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BA1DEA5-7682-474A-898B-C847D1DD2FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BA1DEA5-7682-474A-898B-C847D1DD2FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BA1DEA5-7682-474A-898B-C847D1DD2FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BA1DEA5-7682-474A-898B-C847D1DD2FDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
