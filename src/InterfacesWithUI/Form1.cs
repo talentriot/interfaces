@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows.Forms;
 using DomainAndServices.Domain;
 using DomainAndServices.Interfaces;
@@ -38,17 +39,34 @@ namespace InterfacesWithUI
             }
         }
 
+        private void InitializeListBoxesWithPeople()
+        {
+            lstLeft.Items.Clear();
+            lstRight.Items.Clear();
+
+            var peopleService = new PersonDataService();
+            var people = peopleService.GetAllPeople();
+
+            foreach (var person in people)
+            {
+                lstLeft.Items.Add(person);
+            }
+        }
+
         private void btnToRight_Click(object sender, EventArgs e)
         {
             if (NothingSelectedIn(lstLeft))
             {
                 return;
             }
-            var selectedFood = lstLeft.SelectedItem as IDBDisplayable;
+            var selectedItem = lstLeft.SelectedItem as IDBDisplayable;
 
-            RemoveFromListBox(lstLeft, selectedFood);
+            RemoveFromListBox(lstLeft, selectedItem);
 
-            AddToListBox(lstRight, selectedFood);
+            var lstRightItemCount = lstRight.Items.Count;
+            selectedItem.SortOrder = lstRightItemCount + 1;
+
+            AddToListBox(lstRight, selectedItem);
         }
 
         private void btnToLeft_Click(object sender, EventArgs e)
@@ -57,21 +75,28 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedFood = lstRight.SelectedItem as IDBDisplayable;
+            var selectedItem = lstRight.SelectedItem as IDBDisplayable;
 
-            RemoveFromListBox(lstRight, selectedFood);
+            RemoveFromListBox(lstRight, selectedItem);
 
-            AddToListBox(lstLeft, selectedFood);
+            selectedItem.SortOrder = 0;
+
+            AddToListBox(lstLeft, selectedItem);
         }
 
-        private void RemoveFromListBox(ListBox listBox, IDBDisplayable selectedPerson)
+        private void RemoveFromListBox(ListBox listBox, IDBDisplayable selectedItem)
         {
-            listBox.Items.Remove(selectedPerson);
+            listBox.Items.Remove(selectedItem);
         }
 
-        private void AddToListBox(ListBox listBox, IDBDisplayable selectedPerson)
+        private void AddToListBox(ListBox listBox, IDBDisplayable selectedItem)
         {
-            listBox.Items.Add(selectedPerson);
+            listBox.Items.Add(selectedItem);
+        }
+
+        private void AddToListBoxAt(ListBox listBox, IDBDisplayable selectedItem, int index)
+        {
+            listBox.Items.Insert(index, selectedItem);
         }
 
         private bool NothingSelectedIn(ListBox listBoxToCheck)
@@ -96,19 +121,6 @@ namespace InterfacesWithUI
 
 
 
-        private void InitializeListBoxesWithPeople()
-        {
-            lstLeft.Items.Clear();
-            lstRight.Items.Clear();
-
-            var peopleService = new PersonDataService();
-            var people = peopleService.GetAllPeople();
-
-            foreach (var person in people)
-            {
-                lstLeft.Items.Add(person);
-            }
-        }
 
         private void btnUp_Click(object sender, EventArgs e)
         {
@@ -116,8 +128,47 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
+            var selectedItem = lstRight.SelectedItem as IDBDisplayable;
+            var selectedItemIndex = lstRight.SelectedIndex;
+
+            if (selectedItemIndex == 0)
+            {
+                return;
+            }
+
+            var aboveItemIndex = selectedItemIndex - 1;
+            var aboveItem = (IDBDisplayable) lstRight.Items[aboveItemIndex];
+
+            selectedItem.SortOrder = aboveItemIndex + 1;
+            aboveItem.SortOrder = selectedItemIndex + 1;
+
+            RefreshRightListBox();
+        }
+
+        private ArrayList listBoxItemsToArrayList(ListBox lstBox)
+        {
+            var items = new ArrayList(lstBox.Items.Count);
+
+            foreach (var item in lstBox.Items)
+            {
+                items.Add(item);
+            }
+
+            return items;
+        }
+
+        private void RefreshRightListBox()
+        {
+            var items = listBoxItemsToArrayList(lstRight);
+
+            items.Sort();
+
+            lstRight.Items.Clear();
+
+            foreach (var item in items)
+            {
+                lstRight.Items.Add(item);
+            }
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -126,10 +177,21 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
+            var selectedItem = lstRight.SelectedItem as IDBDisplayable;
+            var selectedItemIndex = lstRight.SelectedIndex;
 
+            if (selectedItemIndex == (lstRight.Items.Count - 1))
+            {
+                return;
+            }
 
+            var belowItemIndex = selectedItemIndex + 1;
+            var belowItem = (IDBDisplayable) lstRight.Items[belowItemIndex];
+
+            selectedItem.SortOrder = belowItemIndex + 1;
+            belowItem.SortOrder = selectedItemIndex + 1;
+
+            RefreshRightListBox();
         }
 
         private void cmbTypeOfItems_SelectedIndexChanged(object sender, EventArgs e)
