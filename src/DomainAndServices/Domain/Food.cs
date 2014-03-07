@@ -3,11 +3,13 @@ using DomainAndServices.Interfaces;
 
 namespace DomainAndServices.Domain
 {
-    public class Food : IComparable, IDBDisplayable
+    public class Food : IDBDisplayable
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Calories { get; set; }
+        public int Index { get; set; }
+
 
         public int CompareTo(object obj)
         {
@@ -20,7 +22,8 @@ namespace DomainAndServices.Domain
             {
                 return -1;
             }
-            return this.Calories.CompareTo(objAsFood.Calories);
+            return this.Index.CompareTo(objAsFood.Index);
         }
+
     }
 }
