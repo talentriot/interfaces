@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using DomainAndServices.Domain;
 using DomainAndServices.Interfaces;
@@ -36,6 +39,13 @@ namespace InterfacesWithUI
             {
                 lstLeft.Items.Add(food);
             }
+            SetSortOrderOnLists();
+        }
+
+        private void SetSortOrderOnLists()
+        {
+            SortService.SetSortOrder(lstLeft.Items.OfType<ISortable>());
+            SortService.SetSortOrder(lstRight.Items.OfType<ISortable>());
         }
 
         private void btnToRight_Click(object sender, EventArgs e)
@@ -49,6 +59,8 @@ namespace InterfacesWithUI
             RemoveFromListBox(lstLeft, selectedFood);
 
             AddToListBox(lstRight, selectedFood);
+
+            SetSortOrderOnLists();
         }
 
         private void btnToLeft_Click(object sender, EventArgs e)
@@ -62,6 +74,7 @@ namespace InterfacesWithUI
             RemoveFromListBox(lstRight, selectedFood);
 
             AddToListBox(lstLeft, selectedFood);
+            SetSortOrderOnLists();
         }
 
         private void RemoveFromListBox(ListBox listBox, IDBDisplayable selectedPerson)
@@ -78,23 +91,6 @@ namespace InterfacesWithUI
         {
             return listBoxToCheck.SelectedIndex < 0;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private void InitializeListBoxesWithPeople()
         {
@@ -116,8 +112,28 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
+            var itemIndex = lstRight.SelectedIndex;
+            if (itemIndex == 0)
+            {
+                return;
+            }
+
+            SwapItems(lstRight, itemIndex-1, itemIndex);
+            
+        }
+
+        private void SwapItems(ListBox listBox, int firstItemIndex, int secondItemIndex)
+        {
+            var sortableList = lstRight.Items.OfType<ISortable>().ToList();
+            var firstItem = sortableList.FirstOrDefault(item => item.SortOrder == (firstItemIndex));
+            var secondItem = sortableList.FirstOrDefault(item => item.SortOrder == (secondItemIndex));
+
+            firstItem.SortOrder = secondItemIndex;
+            secondItem.SortOrder = firstItemIndex;
+            var sortedList = sortableList.OrderBy(item => item.SortOrder).ToList();
+
+            lstRight.Items.Clear();
+            sortedList.ForEach(item => lstRight.Items.Add(item));
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -126,10 +142,13 @@ namespace InterfacesWithUI
             {
                 return;
             }
-            var selectedPerson = lstRight.SelectedItem as Person;
-            var selectedPersonIndex = lstRight.SelectedIndex;
+            var itemIndex = lstRight.SelectedIndex;
+            if (itemIndex == lstRight.Items.Count - 1)
+            {
+                return;
+            }
 
-
+            SwapItems(lstRight, itemIndex, itemIndex + 1);
         }
 
         private void cmbTypeOfItems_SelectedIndexChanged(object sender, EventArgs e)
@@ -147,6 +166,7 @@ namespace InterfacesWithUI
             {
                 InitializeListBoxesWithPeople();
             }
+            SetSortOrderOnLists();
         }
 
     }

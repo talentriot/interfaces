@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using DomainAndServices.Domain;
+using System.Linq;
+using DomainAndServices.Interfaces;
 
 namespace DomainAndServices.Services
 {
@@ -34,6 +36,7 @@ namespace DomainAndServices.Services
                 tomato,
                 kiwi
             };
+
             return foods;
         }
     }
